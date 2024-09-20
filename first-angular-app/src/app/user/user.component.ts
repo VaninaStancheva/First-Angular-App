@@ -16,7 +16,7 @@ export class UserComponent {
     return 'assets/users/' + this.user.avatar;
   }
 
-  onSelectUser(event: MouseEvent) {
+  onSelectUser() {
     this.select.emit(this.user.id);
   }
 
