@@ -20,5 +20,4 @@ export class UserComponent {
     this.select.emit(this.user.id);
   }
 
-  protected readonly MouseEvent = MouseEvent;
 }
