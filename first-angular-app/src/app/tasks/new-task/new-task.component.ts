@@ -8,6 +8,11 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrl: './new-task.component.css'
 })
 export class NewTaskComponent {
-@Input() newTaskId!: string;
+@Output() cancel = new EventEmitter<void>();
+
+onCancel () {
+  this.cancel.emit();
+}
+  
 }
 

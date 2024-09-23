@@ -18,7 +18,6 @@ export class TasksComponent {
   @Input({ required: true }) name!: string;
   isAddingTask = false;
   tasks = dummyTasks;
-  newTaskId = '';
 
   get selectedUserTasks() {
     return this.tasks.filter((task) => task.userId === this.userId)
@@ -28,17 +27,11 @@ export class TasksComponent {
     this.tasks = this.tasks.filter((task) => task.id !== id);
   }
 
-  onAddTask() {
-    const newTask: Task = {
-      id: '10',
-      userId: this.userId,
-      title: 'Prepare issue template',
-      summary:
-      'Prepare and describe an issue template which will help with project management',
-      dueDate: '2024-06-15',
-    };
-    this.newTaskId = this.userId;
+  onStartAddTask() {
     this.isAddingTask = true;
-    this.tasks.push(newTask)
   }   
+
+  onCancelAddTask() {
+    this.isAddingTask = false;
+  }
 }
