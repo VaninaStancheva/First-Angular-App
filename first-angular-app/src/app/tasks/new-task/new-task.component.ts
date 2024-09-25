@@ -1,6 +1,7 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NewTaskData } from '../task/task.model';
+import { TasksService } from '../tasks.service';
 
 @Component({
   selector: 'app-new-task',
@@ -10,24 +11,29 @@ import { NewTaskData } from '../task/task.model';
   styleUrl: './new-task.component.css'
 })
 export class NewTaskComponent {
-@Output() cancel = new EventEmitter<void>();
-@Output() add = new EventEmitter<NewTaskData>();
+  @Input({ required: true }) userId!: string;
+  @Output() close = new EventEmitter<void>();
 
-enteredTitle = '';
-enteredSummary = '';
-entredDate = '';
+  enteredTitle = '';
+  enteredSummary = '';
+  entredDate = '';
+  private tasksService = inject(TasksService);
 
-onCancel () {
-  this.cancel.emit();
-}
 
-onSubmit () {
-  this.add.emit({
-    title: this.enteredTitle,
-    summery: this.enteredSummary,
-    date: this.entredDate,
-  })
-}
-  
+  onCancel() {
+    this.close.emit();
+  }
+
+  onSubmit() {
+    this.tasksService.addTask(
+      {
+        title: this.enteredTitle,
+        summery: this.enteredSummary,
+        date: this.entredDate,
+      },
+      this.userId
+    );
+    this.close.emit();
+  }
 }
 
